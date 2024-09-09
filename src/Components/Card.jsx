@@ -7,19 +7,13 @@ const Card = (props) => {
     let setLikedCourses = props.setLikedCourses;
 
     function clickHandler() {
-        // Logic
         if (likedCourses.includes(props.course.id)) {
-            // pahle se liked 
             setLikedCourses((prev) => prev.filter((cid) => cid !== props.course.id));
             toast.warning("Liked Removed");
-        }
-        else {
-            // pahle se like nahi hai course 
-            // insert karne h y course like course me 
+        } else {
             if (likedCourses.length === 0) {
                 setLikedCourses([props.course.id]);
-            }
-            else {
+            } else {
                 setLikedCourses((prev) => [...prev, props.course.id]);
             }
             toast.success("Liked Successfully");
@@ -28,19 +22,19 @@ const Card = (props) => {
 
     return (
         <div className='bg-bgDark bg-opacity-80 w-[300px] rounded-md overflow-hidden'>
-            <div className='relative '>
+            <div className='relative'>
                 <img src={props.course.image.url} alt="Course Image" className='' />
 
                 <div className='rounded-full w-[40px] h-[40px] bg-white absolute right-2 bottom-[-12px] grid place-items-center'>
-                    <button onClick={clickHandler}>
+                    <button onClick={clickHandler} data-testid="like-button">
                         {
-                            !likedCourses.includes(props.course.id) ? <FcLikePlaceholder fontSize="1.75rem" /> : <FcLike fontSize="1.75rem" />
+                            !likedCourses.includes(props.course.id)
+                                ? <FcLikePlaceholder fontSize="1.75rem" data-testid="like-placeholder" />
+                                : <FcLike fontSize="1.75rem" data-testid="like-icon" />
                         }
                     </button>
                 </div>
             </div>
-
-
 
             <div className='p-4'>
                 <p className='text-white text-lg font-semibold leading-6'>{props.course.title}</p>
@@ -48,12 +42,10 @@ const Card = (props) => {
                     {
                         props.course.description.length > 100 ? (props.course.description.substring(0, 100) + "...") : (props.course.description)
                     }
-
                 </p>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default Card
+export default Card;
